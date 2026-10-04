@@ -73,8 +73,7 @@ export function useEditHistoryActions({
   const apply = useCallback(
     async (direction: "undo" | "redo") => {
       const noun = direction === "undo" ? "Undo" : "Redo";
-      // An edit still saving is newer than any step history knows, so its revert is painted first;
-      // otherwise paint the step this tab predicts. The server's answer then confirms or corrects.
+      // An edit still saving is newer than any step history knows; the server confirms either paint.
       const pendingEditShown = direction === "undo" ? revertNewestStudioPendingEdit() : null;
       const predicted = pendingEditShown ? null : (editHistory.predict?.(direction) ?? null);
       const predictedShown = predicted ? (showHistoryRestoreNow?.(predicted.files) ?? null) : null;
